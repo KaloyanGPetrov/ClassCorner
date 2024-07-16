@@ -7,12 +7,12 @@ namespace ClassCorner.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
 
-        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Usser> Ussers { get; set;}
 
     }
 }

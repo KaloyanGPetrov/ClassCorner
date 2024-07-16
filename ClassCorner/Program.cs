@@ -2,8 +2,10 @@
 using ClassCorner.Data;
 using ClassCorner.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 
 
@@ -24,50 +26,27 @@ namespace ClassCorner
 
             builder.Services.AddAuthorization();
 
-            builder.Services.AddIdentityApiEndpoints<AppUser>()
+            builder.Services.AddIdentityCore<IdentityUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddApiEndpoints();
+
+            builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+            builder.Services.AddAuthorizationBuilder();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
-                {
-                    Title = "Auth Demo",
-                    Version = "v1"
-                });
+            builder.Services.AddSwaggerGen();
 
-                options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
-                {
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Description = "Please enter a token",
-                    Name = "Authorization",
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "bearer"
-                });
+            
 
-                options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        []
-                    }
-                });
-            });
+
+
 
             var app = builder.Build();
 
-            app.MapIdentityApi<AppUser>();
+            app.MapIdentityApi<IdentityUser>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -79,7 +58,6 @@ namespace ClassCorner
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -99,29 +77,26 @@ namespace ClassCorner
 
             using (var scope = app.Services.CreateScope())
             {
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
                 string email = "admin@admin.com";
                 string password = "Test@1234";
-                string firstName = "Admin";
-                string lastName = "1";
-                string role = "Admin";
 
                if  (await userManager.FindByEmailAsync(email) == null)
                 {
-                    var user = new AppUser();
+                    var user = new IdentityUser();
                     user.Email = email;
                     user.UserName = email;
-                    user.FirstName = firstName;
-                    user.LastName = lastName;
-                    user.Role = role;
 
                     await userManager.CreateAsync(user, password);
 
-                    await userManager.AddToRoleAsync(user, user.Role);
+                    await userManager.AddToRoleAsync(user, "Admin");
 
                 }
             }
+
+
+            app.MapGet("/test", (ClaimsPrincipal user) => $"Hello {user.Identity!.Name}").RequireAuthorization();
 
             app.Run();
         }
