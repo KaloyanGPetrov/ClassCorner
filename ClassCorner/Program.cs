@@ -1,5 +1,5 @@
 
-using ClassCorner.Models;
+using ClassCorner.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClassCorner
