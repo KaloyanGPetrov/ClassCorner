@@ -12,7 +12,8 @@ namespace ClassCorner.Data
 
         }
 
-        public DbSet<Usser> Ussers { get; set;}
+        public DbSet<Student> Students { get; set;}
+        public DbSet<Class> Classes { get; set;}
 
     }
 }

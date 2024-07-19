@@ -16,7 +16,7 @@ namespace ClassCorner.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
 
-    public class IdentityControler : ControllerBase
+    public class IdentityControler : ControllerBase, IIdentityControler
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -26,6 +26,14 @@ namespace ClassCorner.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+
+
+        [HttpGet]
+        public void logout()
+        {
+            _signInManager.SignOutAsync();
         }
 
 
@@ -218,7 +226,7 @@ namespace ClassCorner.Controllers
         }
 
         [HttpDelete("{email}")]
-        public JsonResult DeleteByEmail(string email, string role)
+        public JsonResult DeleteRoleByEmail(string email, string role)
         {
             var result = _userManager.FindByEmailAsync(email);
 
@@ -447,6 +455,19 @@ namespace ClassCorner.Controllers
             return new JsonResult(Ok(result));
         }
 
+        [HttpPatch]
+        public JsonResult ReplaceUser(IdentityUser user)
+        {
+            var result = _userManager.FindByIdAsync(user.Id);
+
+            if (result == null)
+                return new JsonResult(NotFound());
+
+            _userManager.DeleteAsync(result.Result);
+            _userManager.CreateAsync(user);
+            return new JsonResult(Ok(user));
+        }
+
 
         private bool IsRoleValid(string role)
         {
@@ -454,5 +475,15 @@ namespace ClassCorner.Controllers
                 return false;
             return true;
         }
+
+        [HttpGet("{email}")]
+        public Task<IdentityUser> GetUser(string email)
+        {
+            var result = _userManager.FindByEmailAsync(email);
+
+            return result;
+        }
+
+
     }
 }

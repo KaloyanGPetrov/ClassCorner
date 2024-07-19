@@ -1,6 +1,8 @@
 
+using ClassCorner.Controllers;
 using ClassCorner.Data;
 using ClassCorner.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +40,6 @@ namespace ClassCorner
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
             
 
 
@@ -62,7 +63,7 @@ namespace ClassCorner
             app.MapControllers();
 
             //Creates the 3 roles if they don't exist currently
-            using(var scope = app.Services.CreateScope())
+            using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
