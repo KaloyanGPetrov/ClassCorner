@@ -13,7 +13,7 @@ namespace ClassCorner.Models
         public int SubjectId { get; set; }
         public Subject Subject { get; set; }
         [ForeignKey(nameof(Teacher))]
-        public string TeacherId { get; set; }
+        public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }
         [ForeignKey(nameof(Homework))]
         public int HomeworkId { get; set; }

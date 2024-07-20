@@ -4,7 +4,7 @@ namespace ClassCorner.Models
 {
     public class Admin
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
     }
 }

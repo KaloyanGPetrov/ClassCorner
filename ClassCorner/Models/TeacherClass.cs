@@ -7,7 +7,7 @@ namespace ClassCorner.Models
         public int Id { get; set; }
 
         [ForeignKey(nameof(Teacher))]
-        public string TeacherId { get; set; }
+        public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }
 
         [ForeignKey(nameof(Class))]

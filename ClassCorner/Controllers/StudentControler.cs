@@ -25,9 +25,6 @@ namespace ClassCorner.Controllers
         [HttpPost]
         public JsonResult Create(Student student)
         {
-            if (student.Id == null || student.Id == string.Empty)
-                return new JsonResult(BadRequest(new { Error = "Id must be filled" }));
-
             _context.Students.Add(student);
             _context.SaveChanges();
 
@@ -36,7 +33,7 @@ namespace ClassCorner.Controllers
 
         //Get
         [HttpGet("{id}")]
-        public JsonResult GetStudent(string id)
+        public JsonResult GetStudent(int id)
         {
             var result = _context.Students.Find(id);
 
@@ -58,7 +55,7 @@ namespace ClassCorner.Controllers
 
         //Delete
         [HttpDelete("{id}")]
-        public JsonResult Delete(string id)
+        public JsonResult Delete(int id)
         {
             var result = _context.Students.Find(id);
             if (result == null)
@@ -74,13 +71,13 @@ namespace ClassCorner.Controllers
 
         //Patch
         [HttpPatch("{id}")]
-        public JsonResult Edit(string id, Student newStudent)
+        public JsonResult Edit(int id, Student newStudent)
         {
             var result = _context.Students.Find(id);
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newStudent.Id == null || newStudent.Id != result.Id)
+            if (newStudent.Id == 0)
                 return new JsonResult(BadRequest());
             
             _context.Students.Remove(result);
