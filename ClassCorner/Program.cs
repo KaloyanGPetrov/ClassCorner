@@ -23,7 +23,7 @@ namespace ClassCorner
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseInMemoryDatabase("AuthDb");
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ClassCorner;Trusted_Connection=True;MultipleActiveResultSets=true");
             });
 
             builder.Services.AddAuthorization();

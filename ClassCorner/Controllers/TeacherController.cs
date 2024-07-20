@@ -1,44 +1,39 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using ClassCorner.Data;
 using ClassCorner.Models;
-using ClassCorner.Data;
-using Microsoft.AspNetCore.Identity;
-
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClassCorner.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class StudentControler : ControllerBase
+    public class TeacherController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public StudentControler(ApplicationDbContext context)
+        public TeacherController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
         //Post        
 
         [HttpPost]
-        public JsonResult Create(Student student)
+        public JsonResult Create(Teacher teacher)
         {
-            if (student.Id == null || student.Id == string.Empty)
+            if (teacher.Id == null || teacher.Id == string.Empty)
                 return new JsonResult(BadRequest(new { Error = "Id must be filled" }));
 
-            _context.Students.Add(student);
+            _context.Teachers.Add(teacher);
             _context.SaveChanges();
 
-            return new JsonResult(Ok(student));
+            return new JsonResult(Ok(teacher));
         }
-
         //Get
-        [HttpGet("{id}")]
-        public JsonResult GetStudent(string id)
+        [HttpGet]
+        public JsonResult Get(string id)
         {
-            var result = _context.Students.Find(id);
+            var result = _context.Teachers.Find(id);
 
             if (result == null)
             {
@@ -48,25 +43,26 @@ namespace ClassCorner.Controllers
             return new JsonResult(Ok(result));
         }
 
+        //Get all
         [HttpGet]
         public JsonResult GetAll()
         {
-            var result = _context.Students.ToList();
+            var result = _context.Teachers.ToList();
 
             return new JsonResult(Ok(result));
         }
 
         //Delete
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public JsonResult Delete(string id)
         {
-            var result = _context.Students.Find(id);
+            var result = _context.Teachers.Find(id);
             if (result == null)
             {
                 return new JsonResult(NotFound());
             }
 
-            _context.Students.Remove(result);
+            _context.Teachers.Remove(result);
             _context.SaveChanges();
 
             return new JsonResult(NoContent());
@@ -74,19 +70,19 @@ namespace ClassCorner.Controllers
 
         //Patch
         [HttpPatch("{id}")]
-        public JsonResult Edit(string id, Student newStudent)
+        public JsonResult Edit(string id, Teacher newTeacher)
         {
-            var result = _context.Students.Find(id);
+            var result = _context.Teachers.Find(id);
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newStudent.Id == null || newStudent.Id != result.Id)
+            if (newTeacher.Id == null || newTeacher.Id != result.Id)
                 return new JsonResult(BadRequest());
-            
-            _context.Students.Remove(result);
-            _context.Students.Add(newStudent);
+
+            _context.Teachers.Remove(result);
+            _context.Teachers.Add(newTeacher);
             _context.SaveChanges();
-            result = _context.Students.Find(id);
+            result = _context.Teachers.Find(id);
             return new JsonResult(Ok(result));
         }
     }

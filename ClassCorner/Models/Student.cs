@@ -13,10 +13,10 @@ namespace ClassCorner.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? PhoneNumber { get; set; }
-        public string ClassName { get; set; }
-        public DateOnly? Birthday { get; set; }
-        //public int ClassId { get; set; }
-        //public Class Class { get; set; }
+
+        [ForeignKey(nameof(Class))]
+        public int ClassId { get; set; }
+        public Class Class { get; set; }
 
 
     }
