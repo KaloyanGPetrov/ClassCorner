@@ -73,13 +73,13 @@ namespace ClassCorner.Controllers
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newHomework.Id == 0)
-                return new JsonResult(BadRequest());
 
-            _context.Homework.Remove(result);
-            _context.Homework.Add(newHomework);
+            result.Solution = newHomework.Solution;
+            result.Grade = newHomework.Grade;
+            result.IsGraded = newHomework.IsGraded;
+            result.StudentId = newHomework.StudentId;
             _context.SaveChanges();
-            result = _context.Homework.Find(id);
+
             return new JsonResult(Ok(result));
         }
     }

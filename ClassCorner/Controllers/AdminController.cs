@@ -73,13 +73,10 @@ namespace ClassCorner.Controllers
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newAdmin.Id == 0)
-                return new JsonResult(BadRequest());
 
-            _context.Admins.Remove(result);
-            _context.Admins.Add(newAdmin);
+            result.Email = newAdmin.Email;
             _context.SaveChanges();
-            result = _context.Admins.Find(id);
+            
             return new JsonResult(Ok(result));
         }
     }

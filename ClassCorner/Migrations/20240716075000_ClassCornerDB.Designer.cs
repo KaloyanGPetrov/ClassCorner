@@ -134,9 +134,6 @@ namespace ClassCorner.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,6 +145,9 @@ namespace ClassCorner.Migrations
 
                     b.Property<string?>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
 
 
                     b.HasKey("Id");

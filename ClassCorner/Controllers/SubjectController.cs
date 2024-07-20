@@ -73,13 +73,10 @@ namespace ClassCorner.Controllers
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newSubject.Id == 0)
-                return new JsonResult(BadRequest());
-
-            _context.Subjects.Remove(result);
-            _context.Subjects.Add(newSubject);
+  
+            result.Name = newSubject.Name;
             _context.SaveChanges();
-            result = _context.Subjects.Find(id);
+ 
             return new JsonResult(Ok(result));
         }
     }

@@ -16,7 +16,7 @@ namespace ClassCorner.Models
 
         [ForeignKey(nameof(Class))]
         public int ClassId { get; set; }
-        public Class Class { get; set; }
+        //public Class Class { get; set; }
 
 
     }

@@ -72,14 +72,17 @@ namespace ClassCorner.Controllers
             var result = _context.Assigments.Find(id);
 
             if (result == null)
-                return new JsonResult(NotFound());
-            if (newAssigment.Id == 0)
-                return new JsonResult(BadRequest());
+                return new JsonResult(NotFound());;
 
-            _context.Assigments.Remove(result);
-            _context.Assigments.Add(newAssigment);
+            result.Name = newAssigment.Name;
+            result.Description = newAssigment.Description;
+            result.Deadline = newAssigment.Deadline;
+            result.SubjectId = newAssigment.SubjectId;
+            result.TeacherId = newAssigment.TeacherId;
+            result.HomeworkId = newAssigment.HomeworkId;
+
             _context.SaveChanges();
-            result = _context.Assigments.Find(id);
+
             return new JsonResult(Ok(result));
         }
     }

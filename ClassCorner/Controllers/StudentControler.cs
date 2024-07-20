@@ -77,13 +77,14 @@ namespace ClassCorner.Controllers
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newStudent.Id == 0)
-                return new JsonResult(BadRequest());
             
-            _context.Students.Remove(result);
-            _context.Students.Add(newStudent);
+            result.Email = newStudent.Email;
+            result.FirstName = newStudent.FirstName;
+            result.LastName = newStudent.LastName;
+            result.PhoneNumber = newStudent.PhoneNumber;
+            result.ClassId = newStudent.ClassId;
+
             _context.SaveChanges();
-            result = _context.Students.Find(id);
             return new JsonResult(Ok(result));
         }
     }
