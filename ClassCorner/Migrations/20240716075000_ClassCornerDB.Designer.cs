@@ -58,9 +58,6 @@ namespace ClassCorner.Migrations
                     b.Property<string?>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HomeworkId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -72,8 +69,6 @@ namespace ClassCorner.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HomeworkId");
 
                     b.HasIndex("SubjectId");
 
@@ -119,9 +114,14 @@ namespace ClassCorner.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("AssigmentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("AssigmentId");
 
                     b.ToTable("Homework");
                 });
@@ -264,12 +264,6 @@ namespace ClassCorner.Migrations
 
             modelBuilder.Entity("ClassCorner.Models.Assigment", b =>
                 {
-                    b.HasOne("ClassCorner.Models.Homework", "Homework")
-                        .WithMany()
-                        .HasForeignKey("HomeworkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ClassCorner.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
@@ -281,8 +275,6 @@ namespace ClassCorner.Migrations
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Homework");
 
                     b.Navigation("Subject");
 
@@ -296,6 +288,14 @@ namespace ClassCorner.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ClassCorner.Models.Assigment", "Assigment")
+                        .WithMany()
+                        .HasForeignKey("AssigmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assigment");
 
                     b.Navigation("Student");
                 });

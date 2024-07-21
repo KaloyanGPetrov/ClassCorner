@@ -53,6 +53,17 @@ namespace ClassCorner.Controllers
             return new JsonResult(Ok(result));
         }
 
+        [HttpGet("{id}")]
+        public JsonResult GetAllByClass(int id)
+        {
+            if (_context.Classes.Find(id) == null)
+                return new JsonResult(BadRequest());
+
+            var result = _context.Students.ToList().Where(x => x.ClassId == id);
+
+            return new JsonResult(Ok(result));
+        }
+
         //Delete
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)

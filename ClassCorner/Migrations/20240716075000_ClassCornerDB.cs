@@ -140,29 +140,6 @@ namespace ClassCorner.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Homework",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Grade = table.Column<int>(type: "int", nullable: true),
-                    IsGraded = table.Column<bool>(type: "bit", nullable: false),
-                    Solution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Homework", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Homework_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Assigments",
                 columns: table => new
@@ -173,18 +150,11 @@ namespace ClassCorner.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Deadline = table.Column<DateOnly>(type: "date", nullable: true),
                     SubjectId = table.Column<int>(type: "int", nullable: false),
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    HomeworkId = table.Column<int>(type: "int", nullable: false)
+                    TeacherId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assigments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Assigments_Homework_HomeworkId",
-                        column: x => x.HomeworkId,
-                        principalTable: "Homework",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Assigments_Subjects_SubjectId",
                         column: x => x.SubjectId,
@@ -198,6 +168,36 @@ namespace ClassCorner.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Homework",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Grade = table.Column<int>(type: "int", nullable: true),
+                    IsGraded = table.Column<bool>(type: "bit", nullable: false),
+                    Solution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    AssigmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Homework", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Homework_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Homework_Assigments_AssigmentId",
+                        column: x => x.AssigmentId,
+                        principalTable: "Assigments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
 
             migrationBuilder.CreateTable(
                 name: "StudentAssigments",
@@ -216,7 +216,7 @@ namespace ClassCorner.Migrations
                         column: x => x.AssigmentId,
                         principalTable: "Assigments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StudentAssigments_Students_StudentId",
                         column: x => x.StudentId,
@@ -224,11 +224,10 @@ namespace ClassCorner.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Assigments_HomeworkId",
-                table: "Assigments",
-                column: "HomeworkId");
+                name: "IX_Homework_AssigmentId",
+                table: "Homework",
+                column: "AssigmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assigments_SubjectId",

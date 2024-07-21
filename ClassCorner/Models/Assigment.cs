@@ -14,10 +14,5 @@ namespace ClassCorner.Models
 
         [ForeignKey(nameof(Teacher))]
         public int TeacherId { get; set; }
-
-        [ForeignKey(nameof(Homework))]
-        public int HomeworkId { get; set; }
-
-
     }
 }

@@ -16,8 +16,8 @@ namespace ClassCorner.Controllers
             _context = context;
         }
 
-        //Post        
-
+        //Post
+        // /homeworks (POST)
         [HttpPost]
         public JsonResult Create(Assigment assigment)
         {
@@ -26,8 +26,10 @@ namespace ClassCorner.Controllers
 
             return new JsonResult(Ok(assigment));
         }
+
         //Get
-        [HttpGet]
+        // /homeworks/{id} (GET)
+        [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
             var result = _context.Assigments.Find(id);
@@ -40,7 +42,6 @@ namespace ClassCorner.Controllers
             return new JsonResult(Ok(result));
         }
 
-        //Get all
         [HttpGet]
         public JsonResult GetAll()
         {
@@ -50,7 +51,8 @@ namespace ClassCorner.Controllers
         }
 
         //Delete
-        [HttpDelete]
+        // /homeworks/{id} (DELETE)
+        [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
             var result = _context.Assigments.Find(id);
@@ -59,13 +61,20 @@ namespace ClassCorner.Controllers
                 return new JsonResult(NotFound());
             }
 
+            foreach(var item in _context.Homework.ToList().Where(x => x.AssigmentId == id))
+                _context.Homework.Remove(item);
+
+            foreach (var item in _context.StudentAssigments.ToList().Where(x => x.AssigmentId == id))
+                _context.StudentAssigments.Remove(item);
+
             _context.Assigments.Remove(result);
             _context.SaveChanges();
 
-            return new JsonResult(NoContent());
+            return new JsonResult(NoContent()); 
         }
 
         //Patch
+        // /homeworks/{id} (PUT)
         [HttpPatch("{id}")]
         public JsonResult Edit(int id, Assigment newAssigment)
         {
@@ -79,7 +88,6 @@ namespace ClassCorner.Controllers
             result.Deadline = newAssigment.Deadline;
             result.SubjectId = newAssigment.SubjectId;
             result.TeacherId = newAssigment.TeacherId;
-            result.HomeworkId = newAssigment.HomeworkId;
 
             _context.SaveChanges();
 
