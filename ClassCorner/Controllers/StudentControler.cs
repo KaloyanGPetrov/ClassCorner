@@ -14,7 +14,7 @@ namespace ClassCorner.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public StudentControler(ApplicationDbContext context, IIdentityControler identityControler)
+        public StudentControler(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -33,7 +33,7 @@ namespace ClassCorner.Controllers
 
         //Get
         [HttpGet("{id}")]
-        public JsonResult GetStudent(string id)
+        public JsonResult GetStudent(int id)
         {
             var result = _context.Students.Find(id);
 
@@ -53,9 +53,20 @@ namespace ClassCorner.Controllers
             return new JsonResult(Ok(result));
         }
 
+        [HttpGet("{id}")]
+        public JsonResult GetAllByClass(int id)
+        {
+            if (_context.Classes.Find(id) == null)
+                return new JsonResult(BadRequest());
+
+            var result = _context.Students.ToList().Where(x => x.ClassId == id);
+
+            return new JsonResult(Ok(result));
+        }
+
         //Delete
         [HttpDelete("{id}")]
-        public JsonResult Delete(string id)
+        public JsonResult Delete(int id)
         {
             var result = _context.Students.Find(id);
             if (result == null)
@@ -71,17 +82,19 @@ namespace ClassCorner.Controllers
 
         //Patch
         [HttpPatch("{id}")]
-        public JsonResult Edit(string id, Student newStudent)
+        public JsonResult Edit(int id, Student newStudent)
         {
             var result = _context.Students.Find(id);
 
             if (result == null)
                 return new JsonResult(NotFound());
-            if (newStudent == null || newStudent.Id != result.Id)
-                return new JsonResult(BadRequest());
             
-            _context.Remove(result);
-            _context.Add(newStudent);
+            result.Email = newStudent.Email;
+            result.FirstName = newStudent.FirstName;
+            result.LastName = newStudent.LastName;
+            result.PhoneNumber = newStudent.PhoneNumber;
+            result.ClassId = newStudent.ClassId;
+
             _context.SaveChanges();
             return new JsonResult(Ok(result));
         }

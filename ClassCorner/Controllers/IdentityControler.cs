@@ -29,7 +29,7 @@ namespace ClassCorner.Controllers
         }
 
 
-
+        // /logout(GET)
         [HttpGet]
         public void logout()
         {
@@ -474,14 +474,6 @@ namespace ClassCorner.Controllers
             if ((role != "Admin") && (role != "Student") && (role != "Teacher"))
                 return false;
             return true;
-        }
-
-        [HttpGet("{email}")]
-        public Task<IdentityUser> GetUser(string email)
-        {
-            var result = _userManager.FindByEmailAsync(email);
-
-            return result;
         }
 
 
