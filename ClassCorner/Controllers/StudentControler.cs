@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ClassCorner.Models;
 using ClassCorner.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -23,6 +24,7 @@ namespace ClassCorner.Controllers
         //Post        
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public JsonResult Create(Student student)
         {
             _context.Students.Add(student);
@@ -33,6 +35,7 @@ namespace ClassCorner.Controllers
 
         //Get
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public JsonResult GetStudent(int id)
         {
             var result = _context.Students.Find(id);
@@ -46,6 +49,7 @@ namespace ClassCorner.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public JsonResult GetAll()
         {
             var result = _context.Students.ToList();
@@ -54,6 +58,7 @@ namespace ClassCorner.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public JsonResult GetAllByClass(int id)
         {
             if (_context.Classes.Find(id) == null)
@@ -66,6 +71,7 @@ namespace ClassCorner.Controllers
 
         //Delete
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public JsonResult Delete(int id)
         {
             var result = _context.Students.Find(id);
@@ -82,6 +88,7 @@ namespace ClassCorner.Controllers
 
         //Patch
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin")]
         public JsonResult Edit(int id, Student newStudent)
         {
             var result = _context.Students.Find(id);

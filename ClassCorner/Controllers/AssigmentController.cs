@@ -1,5 +1,6 @@
 ﻿using ClassCorner.Data;
 using ClassCorner.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace ClassCorner.Controllers
         //Post
         // /homeworks (POST)
         [HttpPost]
+        
         public JsonResult Create(Assigment assigment)
         {
             _context.Assigments.Add(assigment);
@@ -30,6 +32,7 @@ namespace ClassCorner.Controllers
         //Get
         // /homeworks/{id} (GET)
         [HttpGet("{id}")]
+        
         public JsonResult Get(int id)
         {
             var result = _context.Assigments.Find(id);
@@ -43,6 +46,7 @@ namespace ClassCorner.Controllers
         }
 
         [HttpGet]
+        
         public JsonResult GetAll()
         {
             var result = _context.Assigments.ToList();
