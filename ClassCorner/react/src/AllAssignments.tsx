@@ -22,12 +22,8 @@ export const AllAssignments = () => {
                 <DateField source="deadline" />
                 <TextField source="subject_id" />
                 <TextField source="teacher_id" />
-                <TextField source="title" />
-                <TextField source="body" />
-                <DateField source="published_at" />
-                <NumberField source="views" />
             </Datagrid>
             <Pagination />
              </ListContextProvider>
     );
-};
+}
