@@ -27,7 +27,7 @@ namespace ClassCorner.Controllers
             return new JsonResult(Ok(studentAssigment));
         }
         //Get
-        [HttpGet]
+        [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
             var result = _context.StudentAssigments.Find(id);
@@ -50,7 +50,7 @@ namespace ClassCorner.Controllers
         }
 
         //Delete
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
             var result = _context.StudentAssigments.Find(id);

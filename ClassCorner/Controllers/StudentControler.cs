@@ -24,7 +24,7 @@ namespace ClassCorner.Controllers
         //Post        
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public JsonResult Create(Student student)
         {
             _context.Students.Add(student);
@@ -35,8 +35,8 @@ namespace ClassCorner.Controllers
 
         //Get
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
-        public JsonResult GetStudent(int id)
+        //[Authorize(Roles = "Admin")]
+        public JsonResult Get(int id)
         {
             var result = _context.Students.Find(id);
 
@@ -49,16 +49,21 @@ namespace ClassCorner.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public JsonResult GetAll()
+       // [Authorize(Roles = "Admin")]
+        public JsonResult GetAll(int? classId)
         {
-            var result = _context.Students.ToList();
+            List<Student> result = new List<Student>();
+            if (classId != null)
+            {
+                result = _context.Students.Where(x => x.ClassId == classId).ToList();
+            }
+            else result = _context.Students.ToList();
 
             return new JsonResult(Ok(result));
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public JsonResult GetAllByClass(int id)
         {
             if (_context.Classes.Find(id) == null)
@@ -71,7 +76,7 @@ namespace ClassCorner.Controllers
 
         //Delete
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public JsonResult Delete(int id)
         {
             var result = _context.Students.Find(id);
@@ -88,7 +93,7 @@ namespace ClassCorner.Controllers
 
         //Patch
         [HttpPatch("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public JsonResult Edit(int id, Student newStudent)
         {
             var result = _context.Students.Find(id);

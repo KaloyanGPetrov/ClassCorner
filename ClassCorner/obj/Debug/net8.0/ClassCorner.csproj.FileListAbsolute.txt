@@ -287,3 +287,4 @@ C:\Users\HP\source\repos\ClassCorner1\ClassCorner\obj\Debug\net8.0\refint\ClassC
 C:\Users\HP\source\repos\ClassCorner1\ClassCorner\obj\Debug\net8.0\ClassCorner.pdb
 C:\Users\HP\source\repos\ClassCorner1\ClassCorner\obj\Debug\net8.0\ClassCorner.genruntimeconfig.cache
 C:\Users\HP\source\repos\ClassCorner1\ClassCorner\obj\Debug\net8.0\ref\ClassCorner.dll
+C:\Users\kokog\source\repos\ClassCorner\ClassCorner\bin\Debug\net8.0\System.Web.Cors.dll
