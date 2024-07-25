@@ -1,4 +1,4 @@
-import { fetchUtils } from "react-admin"
+import { fetchUtils, GetManyReferenceParams } from "react-admin"
 import { json } from "stream/consumers"
 
 export const dataProvider = {
@@ -26,6 +26,13 @@ export const dataProvider = {
       return data
     })
   },
+
+  // getManyRefrence: (resource: string, params: GetManyReferenceParams) =>{
+  //   return fetchUtils.fetchJson(`https://localhost:7121/api/${resource}/GetAll/${params}`).then((responce) => {
+  //     const data = {data: responce.json.value, total: responce.json.value.length}
+  //     return data
+  //   })
+  // },
 
   delete:(resource, params) => {
     return fetchUtils.fetchJson(`https://localhost:7121/api/${resource}/Delete/${params.id}`, {method: "DELETE"}).then((responce) => {

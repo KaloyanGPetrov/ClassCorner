@@ -23,5 +23,6 @@ namespace ClassCorner.Data
         public DbSet<TeacherClass> TeacherClasses { get; set; }
         public DbSet<TeacherSubject> TeacherSubjects { get; set; }
 
+        
     }
 }
