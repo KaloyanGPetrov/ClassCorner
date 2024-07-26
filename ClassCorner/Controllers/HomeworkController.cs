@@ -21,6 +21,7 @@ namespace ClassCorner.Controllers
         [HttpPost]
         public JsonResult Create(Homework homework)
         {
+            homework.IsGraded = false;
             _context.Homework.Add(homework);
             _context.SaveChanges();
 

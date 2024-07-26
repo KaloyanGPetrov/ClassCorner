@@ -25,7 +25,7 @@ export const HomeworksList = () => (
         <Datagrid>
             <TextField source="id" />
             <NumberField source="grade" />
-            <BooleanField source="isGrade" />
+            <BooleanField source="isGraded" />
             <TextField source="solution"/>
             <NumberField source="studentId" />
             <NumberField source="assigmentId" />
@@ -38,9 +38,6 @@ export const HomeworksList = () => (
 export const HomeworksCreate = () => (
     <Create>
         <SimpleForm>
-        <TextInput source="id" validate={[required()]} />
-        <NumberInput source="grade" validate={[required()]}/>
-        <BooleanInput source="isGrade" validate={[required()]} />
         <TextInput source="solution" validate={[required()]}/>
         <NumberInput source="studentId" validate={[required()]}/>
         <NumberInput source="assigmentId" validate={[required()]}/>
@@ -53,7 +50,7 @@ export const HomeworksShow = () => (
         <SimpleShowLayout>
         <TextField source="id" />
             <NumberField source="grade" />
-            <BooleanField source="isGrade" />
+            <BooleanField source="isGraded" />
             <TextField source="solution"/>
             <NumberField source="studentId" />
             <NumberField source="assigmentId" />
@@ -64,9 +61,8 @@ export const HomeworksShow = () => (
 export const HomeworksEdit = () => (
     <Edit>
         <SimpleForm>
-        <TextInput source="id" validate={[required()]} />
         <NumberInput source="grade" validate={[required()]}/>
-        <BooleanInput source="isGrade" validate={[required()]} />
+        <BooleanInput source="isGraded" validate={[required()]} />
         <TextInput source="solution" validate={[required()]}/>
         <NumberInput source="studentId" validate={[required()]}/>
         <NumberInput source="assigmentId" validate={[required()]}/>

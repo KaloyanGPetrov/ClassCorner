@@ -39,7 +39,7 @@ export const AssigmentsCreate = () => (
         <SimpleForm>
             <TextInput source="name" validate={[required()]} />
             <TextInput source="description" validate={[required()]} />
-            <DateInput source="deadline" validate={[required()]} />
+            <DateInput source="deadline"  />
             <NumberInput source="subjectId" validate={[required()]} />
             <NumberInput source="teacherId" validate={[required()]} />
         </SimpleForm>
@@ -64,7 +64,7 @@ export const AssigmentsEdit = () => (
         <SimpleForm>
             <TextInput source="name" validate={[required()]} />
             <TextInput source="description" validate={[required()]} />
-            <DateInput source="deadline" validate={[required()]} />
+            <DateInput source="deadline"  />
             <NumberInput source="subjectId" validate={[required()]} />
             <NumberInput source="teacherId" validate={[required()]} />
         </SimpleForm>

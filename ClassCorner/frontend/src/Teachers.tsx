@@ -39,7 +39,7 @@ export const TeachersCreate = () => (
             <TextInput source="firstName"  validate={[required()]}/>           
             <TextInput source="lastName" validate={[required()]}/>
             <TextInput source='email' validate={[required()]}/>
-            <TextInput source='phoneNumber' validate={[required()]}/>
+            <TextInput source='phoneNumber'/>
         </SimpleForm>
     </Create>
 );
